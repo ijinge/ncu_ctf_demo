@@ -4,18 +4,14 @@ import cn.ncu.ctf.demo.common.R;
 import cn.ncu.ctf.demo.entities.User;
 import cn.ncu.ctf.demo.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static com.sun.webkit.perf.WCFontPerfLogger.log;
 
 @Slf4j
 @RestController
