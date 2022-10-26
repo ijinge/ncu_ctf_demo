@@ -1,7 +1,9 @@
 package cn.ncu.ctf.demo;
 
+import cn.ncu.ctf.demo.entities.Manager;
 import cn.ncu.ctf.demo.entities.User;
 import cn.ncu.ctf.demo.mapper.UserMapper;
+import cn.ncu.ctf.demo.service.ManagerService;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,19 @@ class CtfDemoApplicationTests {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ManagerService managerService;
     @Test
     void contextLoads() {
-        User user = new User();
-        user.setUsername("图图");
-        user.setAddress("翻斗花园");
+        Manager user = new Manager();
+        user.setUsername("ijinge");
         user.setEmail("2312387123@qq.com");
-        user.setPassword("123456789");
-        user.setScores(100L);
+        user.setPassword("zxl19730926");
         user.setPhone("1783218973");
         user.setHeadImage("null");
+        user.setLevel(1);
 
-        userMapper.insert(user);
+        managerService.save(user);
     }
 
 }

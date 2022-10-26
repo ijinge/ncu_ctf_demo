@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{static/css/semantic.min.css}">
+    <link rel="stylesheet" th:href="@{static/css/me.css}">
+
+    <title>NCU—CTF后台登录</title>
+
+</head>
+
+<div class="ui m-container-small" style="position: relative;top:30%;width: 40%;">
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <div class="ui segment">
+                <form class="ui large form" method="post" th:action="@{/admin/login}">
+                    <h2 class="ui header teal">
+                        管理后台
+                    </h2>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <button class="ui fluid large teal submit button">Login</button>
+
+                    <div class="ui error mini message"></div>
+                    <div class="ui mini message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{static/js/semantic.min.js}"></script>
+<script>
+    //表单验证
+    $('.ui.form').form({
+        fields: {
+            username: {
+                identifier: 'username',
+                rules: [{
+                    type: 'empty',
+                    prompt: " 请输入用户名"
+                }]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'empty',
+                    prompt: " 请输入密码"
+                }]
+            }
+        }
+    })
+
+</script>
+</html>

@@ -1,0 +1,319 @@
+/*--------各种内边距---------*/
+
+.m-clear-mp {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.m-padded-tb-all-mini {
+    padding: 0.3em !important;
+}
+.m-padded-tb-all {
+    padding: 1em !important;
+}
+
+.m-padded-tb-mini {
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important ;
+}
+.m-padded-tb-tiny {
+    padding-top: 0.3em !important;
+    padding-bottom: 0.3em !important;
+}
+
+.m-padded-tb-small {
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+
+.m-padded-tb {
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.m-padded-tb-large {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-padded-tb-big {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padded-tb-huge {
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+
+.m-padded-tb-massive {
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+.m-padded-lr {
+    padding-left: 2em !important;
+    padding-right: 2em !important;
+
+}
+.m-padded-lr-responsive {
+    padding-left: 2em!important;
+    padding-right: 2em!important;
+}
+
+
+
+/*---------mergin-----------*/
+
+.m-margin-t-mini {
+    margin-top: 0.3em !important;
+}
+.m-margin-t-small {
+    margin-top: 0.5em !important;
+}
+.m-margin-t-large {
+    margin-top: 1em !important;
+}
+.m-margin-t-big {
+    margin-top: 1.5em !important;
+}
+.m-margin-b-mini {
+    margin-bottom: 0.2em !important;
+}
+.m-margin-b-small {
+    margin-bottom: 0.5em !important;
+}
+
+.m-margin-tb-tiny {
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+.m-margin-tb-mini {
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+}
+
+.m-margin-tb-small {
+    margin-top: 0.8em !important;
+    margin-bottom: 0.8em !important;
+}
+
+.m-margin-tb-big {
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+}
+
+/*-------text--------*/
+
+/*字体大小*/
+.m-text-thin {
+    font-weight: 300 !important;
+}
+/*行间距*/
+.m-text-spaced {
+    letter-spacing: 1px !important;
+}
+
+/*图标大小*/
+.m-icon-big {
+    font-size: 16px;
+}
+
+/*圆角*/
+.m-border-radius {
+    border-radius: 4px;
+}
+
+/*行高*/
+.m-text-lined {
+    line-height: 1.8;
+}
+
+.m-opactiy-mini {
+    opacity: 0.8;
+}
+
+
+
+
+
+
+/*行内块设置*/
+.m-inlineBlock {
+    display: inline-block !important;
+}
+
+/*自定容器大小*/
+.m-container {
+    max-width: 72em !important;
+    margin: 0 auto;
+}
+
+.m-container-small {
+    max-width: 60em !important;
+    margin: 0 auto;
+}
+
+.m-container-big {
+    max-width: 90em !important;
+    margin: 0 auto;
+}
+
+/*指定到右上角布局*/
+.m-top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+}
+
+/*手机端按钮出现*/
+.m-mobile-show {
+    display: none !important;
+}
+
+/*手机端评论按钮*/
+.m-mobile-wide {
+
+}
+
+@media screen and (max-width: 768px) {
+    .m-mobile-hide {
+        display: none !important;
+    }
+    .m-mobile-show {
+        display: block !important;
+    }
+    .m-padded-lr-responsive {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .m-mobile-wide {
+        width: 100%;
+    }
+}
+
+/*position*/
+.m-fixed {
+    position: fixed !important;
+    z-index: 1 !important;
+}
+
+.m-right-bottom {
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+
+.gird-header {
+    width: 100%;
+    min-height: 60px;
+    opacity: 0.8;
+    position: fixed;
+    background-color: rgba(0,0,0,1);
+    z-index: 11002;
+    top: 0;
+    left: 0;
+    /* border-bottom: 1px solid #e8e9e7; */
+    font-size: 15px;
+}
+
+.gird-footer {
+    width: 100%;
+    min-height: 60px;
+    opacity: 0.8;
+    background-color: rgba(0,0,0,1);
+    z-index: 11002;
+    /* border-bottom: 1px solid #e8e9e7; */
+    font-size: 15px;
+}
+
+
+
+/*轮播图*/
+.slide {
+    position: relative;
+    margin: 0px auto;
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    font-family: Arial;
+    color: #fff;
+    overflow: hidden;
+}
+.slide ul {
+    margin: 0 0;
+    padding: 0;
+    width: calc(800px * 3);
+    transition: all .5s;
+}
+.slide li {
+    float: left;
+    width: 800px;
+    height: 400px;
+    list-style: none;
+    line-height: 500px;
+    font-size: 50px;
+}
+.slide li:nth-child(1) {
+    background-color: #9fa8ef;
+}
+.slide li:nth-child(2) {
+    background-color: #ef9fb1;
+}
+.slide li:nth-child(3) {
+    background-color: #9fefc3;
+}
+.slide input[name="button"] {
+    display: none;
+
+}
+.slide label[for^="button"] {
+    position: absolute;
+    top: 350px;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+
+    line-height: 20px;
+    color: #fff;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: .3s;
+}
+.slide label[for="button1"] {
+    left: 40%;
+}
+.slide label[for="button2"] {
+    left: 45%;
+}
+.slide label[for="button3"] {
+    left: 50%;
+}
+#button1:checked ~ul {
+    margin-left: 0;
+}
+#button2:checked ~ul {
+    margin-left: -800px;
+}
+#button3:checked ~ul {
+    margin-left: -1600px;
+}
+#button1:checked ~ label[for="button1"] {
+    background: rgb(255,80,0);
+}
+#button2:checked ~ label[for="button2"] {
+    background: rgb(255,80,0);
+}
+
+#button3:checked ~ label[for="button3"] {
+    background: rgb(255,80,0);
+}
+
+/*----------color---------*/
+
+.m-teal {
+    color: #00B5AD !important;
+}

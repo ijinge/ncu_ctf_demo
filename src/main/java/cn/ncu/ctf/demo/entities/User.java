@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @Author: jinge
@@ -31,5 +32,7 @@ public class User implements Serializable {
     private String address;
 
     private String phone;
+
+    private LocalDateTime updateTime;
 
 }
