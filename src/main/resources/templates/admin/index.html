@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
     <base th:href="@{/}">
-  <link rel="stylesheet" th:href="@{static/css/semantic.min.css}">
-  <link rel="stylesheet" th:href="@{static/css/me.css}">
+  <link rel="stylesheet" href="../../static/css/semantic.min.css" th:href="@{static/css/semantic.min.css}">
+  <link rel="stylesheet" href="../../static/css/me.css" th:href="@{static/css/me.css}">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     <!--设置项目路径/-->
     <title>NCU—CTF管理后台</title>
@@ -18,11 +18,11 @@
                 <h3 class="ui teal header item">NCU—CTF管理后台</h3>
                 <a href="#" th:href="@{/admin/challenges}" class="nav-item item m-icon-big m-mobile-hide"><i class="home icon"></i> 题目</a>
                 <a href="#" th:href="@{/admin/solutions}" class="nav-item item m-icon-big m-mobile-hide"><i class="idea icon"></i> 题解</a>
-                <a href="#" th:href="@{/admin/manage}" class="nav-item item m-icon-big m-mobile-hide"><i class="tags icon"></i> 用户管理</a>
+                <a href="#" th:href="@{/admin/UserManage}" class="nav-item item m-icon-big m-mobile-hide"><i class="tags icon"></i> 用户管理</a>
                 <div class="right menu m-mobile-hide">
                     <div class="ui dropdown item">
                         <div class="text">
-                            <img class="ui avatar image" th:src="@{static/images/touxiang/touxiang2.jpg}" src="/static/images/touxiang/touxiang.jpg">
+                            <img class="ui avatar image" th:src="@{static/images/touxiang/touxiang2.jpg}" src="/static/images/touxiang/touxiang2.jpg">
                             <span th:text="${manager.getUsername()}">ijinge</span>
                         </div>
                         <i class="dropdown icon"></i>
@@ -40,13 +40,6 @@
         </a>
     </nav>
 
-    <div class="ui attached pointing menu">
-        <div class="ui container" style="flex-direction:row-reverse">
-            <a href="#" th:href="@{/admin/blogs/input}" class="item">发布</a>
-            <a href="#" th:href="@{/admin/blogs}" class="item">列表</a>
-        </div>
-    </div>
-
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
             <div class="ui success large message">
@@ -60,7 +53,7 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{static/js/semantic.min.js}"></script>
+<script type="text/javascript" src="../../static/js/semantic.min.js" th:src="@{static/js/semantic.min.js}"></script>
 <script>
     //移动按钮响应
     $('.menu.toggle').click(function () {

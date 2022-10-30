@@ -2,9 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <base th:href="@{/}">
     <link rel="stylesheet" th:href="@{static/css/semantic.min.css}">
     <link rel="stylesheet" th:href="@{static/css/me.css}">
-
     <title>NCU—CTF后台登录</title>
 
 </head>
@@ -33,7 +33,9 @@
                     <button class="ui fluid large teal submit button">Login</button>
 
                     <div class="ui error mini message"></div>
-                    <div class="ui mini message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+                    <div class="ui mini message" th:unless="${#strings.isEmpty(message)}">
+                        <span th:text="${message}"></span>
+                    </div>
 
                 </form>
             </div>

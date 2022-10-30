@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 
 @Slf4j
-@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/admin/**")
+@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/admin/*")
 public class LoginCheckFilter implements Filter {
     //进行路径比较 对于 /backend/index.html这样的进行过滤
     public static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
@@ -30,21 +30,21 @@ public class LoginCheckFilter implements Filter {
         String[] uris = new String[]{
                 "/admin/login",
                 "/admin",
-                "/admin/logout",
                 "/admin/static/**",
         };
         //判断本次请求是否需要处理
         boolean check = check(uris, requestURI);
 
+        log.info(request.getSession().toString());
         //不需要处理
         if (check) {
             filterChain.doFilter(request,response);
             log.info("放行请求：{}",request.getRequestURI());
             return;
         }
-
         //判断登录情况，如果登录了，就放行
-        if (request.getSession().getAttribute("admin") != null) {
+
+        if (request.getSession().getAttribute("manager") != null) {
             log.info("放行请求：{}",request.getRequestURI());
             filterChain.doFilter(request,response);
             return;
@@ -61,7 +61,6 @@ public class LoginCheckFilter implements Filter {
      * */
     public boolean check(String[] uris,String requestURI) {
 
-        //疑问？ 如何处理 .html这样的资源
         for(String uri : uris){
             //将请求URI 与 放行路径中的URI进行比较
             boolean match = ANT_PATH_MATCHER.match(uri, requestURI);

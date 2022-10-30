@@ -1,8 +1,9 @@
 package cn.ncu.ctf.demo.controller;
 
+import cn.ncu.ctf.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author: jinge
@@ -11,10 +12,28 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class indexController {
 
+    @Autowired
+    private UserService userService;
+
+
 
     @RequestMapping({"/","index"})
     public String index() {
         return "index";
     }
+
+
+    @RequestMapping("/login")
+    public String userLogin() {
+        return "index";
+    }
+
+    @RequestMapping("/challenge")
+    public String challenge() {
+        return "challenge";
+    }
+
+
+
 
 }

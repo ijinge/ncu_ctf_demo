@@ -1,3 +1,6 @@
+
+
+
 /*--------各种内边距---------*/
 
 .m-clear-mp {
@@ -5,7 +8,7 @@
     margin: 0 !important;
 }
 
-.m-padded-tb-all-mini {
+.m-padded-all-mini {
     padding: 0.3em !important;
 }
 .m-padded-tb-all {
@@ -84,6 +87,11 @@
     margin-bottom: 0.5em !important;
 }
 
+.m-margin-b-big {
+    margin-bottom: 1em !important;
+}
+
+
 .m-margin-tb-tiny {
     margin-top: 0.3em !important;
     margin-bottom: 0.3em !important;
@@ -103,6 +111,16 @@
     margin-top: 1em !important;
     margin-bottom: 1em !important;
 }
+.m-margin-lr-big {
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+}
+
+.m-margin-l-big {
+    margin-left: 1em !important;
+}
+
+
 
 /*-------text--------*/
 
@@ -316,4 +334,15 @@
 
 .m-teal {
     color: #00B5AD !important;
+
 }
+
+.m-white {
+    color: white !important;
+ }
+
+.m-black {
+    color: black !important;
+}
+
+

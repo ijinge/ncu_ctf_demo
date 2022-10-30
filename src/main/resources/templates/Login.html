@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base th:href="@{/}">
+    <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{static/css/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{static/css/me.css}">
+    <title>NCU-CTF</title>
+</head>
+<body>
+    <nav>
+      <div class="ui segment big-font-weight slight-background-opacity">
+        <div class="ui grid">
+          <div class="four wide column center aligned">
+            <h2 class="ui header font-center-small m-padded-lr">NCU-CTF</h2>
+          </div>
+          <div class="eight wide column font-center-tiny">
+
+            <a href="#" class="m-icon-big m-black m-padded-lr"><i class="trophy icon"></i> 挑战</a>
+            <a href="#" class="m-icon-big m-black m-padded-lr" ><i class="trophy icon"></i> 题解</a>
+            <a href="#" class="m-icon-big m-black m-padded-lr"><i class="trophy icon"></i> 排行榜</a>
+          </div>
+          <!--用户登录信息-->
+          <div class="four wide column right aligned font-center-small">
+            <div class="ui dropdown user">
+              <img class="ui avatar image" th:src="@{static/images/touxiang/touxiang2.jpg}" src="/static/images/touxiang/touxiang2.jpg">
+              <span th:text="${user.getUsername()}">请登录</span>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">
+                  <a  href="#" th:href="@{/user/login}" class="item">登录</a>
+                </div>
+                <div class="item">
+                  <a  href="#" th:href="@{/user/login}" class="item">个人信息</a>
+                </div>
+                <div class="item">
+                  <a href="#" th:href="@{/user/logout}" class="item">退出</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <!--通知-->
+    <div class="ui container center aligned m-margin-tb-big">
+      <div class="ui row center aligned">
+        <h1 class="ui huge header azure-color">Login</h1>
+      </div>
+
+      <div class="ui row center aligned m-margin-tb-big">
+          <div class="ui m-container-small">
+            <div class="ui middle aligned center aligned grid">
+              <div class="column">
+                <div class="ui segment">
+                  <form class="ui large form" method="post" th:action="@{/user/login}">
+
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="username" placeholder="用户名">
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="密码">
+                      </div>
+                    </div>
+                    <button class="ui fluid large teal submit button m-margin-tb-big">Login</button>
+                    <span>没有账号？<a class="m-black" href="#">点击这里注册</a></span>
+                    <div class="ui error mini message"></div>
+                    <div class="ui mini message" th:unless="${#strings.isEmpty(message)}">
+                      <span th:text="${message}"></span>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+
+    </div>
+
+
+
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/js/semantic.min.js" th:src="@{static/js/semantic.min.js}"></script>
+
+<script>
+  $('.ui.dropdown.user').dropdown();
+
+
+  //表单验证
+  $('.ui.form').form({
+    fields: {
+      username: {
+        identifier: 'username',
+        rules: [{
+          type: 'empty',
+          prompt: " 请输入用户名"
+        }]
+      },
+      password: {
+        identifier: 'password',
+        rules: [{
+          type: 'empty',
+          prompt: " 请输入密码"
+        }]
+      }
+    }
+  })
+</script>
+
+</html>

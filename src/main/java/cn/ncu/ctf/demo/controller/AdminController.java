@@ -1,6 +1,5 @@
 package cn.ncu.ctf.demo.controller;
 
-import cn.ncu.ctf.demo.common.R;
 import cn.ncu.ctf.demo.entities.Manager;
 import cn.ncu.ctf.demo.entities.User;
 import cn.ncu.ctf.demo.service.ManagerService;
@@ -11,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
+import java.util.List;
+
 @Slf4j
 @Controller
 public class AdminController {
@@ -30,20 +29,22 @@ public class AdminController {
     private UserService userService;
 
     //跳转到后台登录页
-    @RequestMapping({"/admin"})
-    public String loginPage() {
+    @RequestMapping("/admin")
+    public String loginPage(@ModelAttribute("message") String message, Model model) {
+        model.addAttribute("message",message);
         return "admin/login";
     }
 
     /**
      *  @author: ijnge
      *  @Date: 2022/10/26
-     *  @Description: 用户登录判断
+     *  @Description: 处理用户登录请求
      */
-    @RequestMapping({"/admin/login"})
+    @RequestMapping("/admin/login")
     public String login(
             Manager manager,
             HttpServletRequest request,
+            RedirectAttributes redirectAttributes,
             Model model)
     {
         //将页面提交的密码md5加密
@@ -59,93 +60,35 @@ public class AdminController {
 
         if (ManagerByName == null) {
             log.info("未查询到用户");
-            model.addAttribute("message","未查询到用户"+manager.getUsername());
+            redirectAttributes.addFlashAttribute("message","未查询到用户"+manager.getUsername());
             //重定向
             return "redirect:/admin";
         }
         //密码比对
         if(!ManagerByName.getPassword().equals(password)){
             log.info("密码错误");
-            model.addAttribute("message","密码错误");
+            redirectAttributes.addFlashAttribute("message","密码错误");
             //重定向
             return  "redirect:/admin";
         }
         //用户登录成功 将id存储session
-        request.getSession().setAttribute("admin",manager.getId_manager());
+        HttpSession session = request.getSession();
+        session.setAttribute("manager",ManagerByName);
 
         model.addAttribute("manager",ManagerByName);
-
         return "/admin/index";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      *  @author: ijnge
-     *  @Date: 2022/10/26
-     *  @Description: 添加用户
+     *  @Date: 2022/10/31
+     *  @Description:返回用户列表未做分页
      */
-    @PostMapping("/user/add")
-    public R<String> addUser(@RequestBody User user) {
-        //加密后的password
-        String password = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
 
-        user.setPassword(password);
-        user.setScores(0L);
-        user.setUpdateTime(LocalDateTime.now());
-        userService.save(user);
-        return R.success("用户"+user.getUsername()+"添加成功!");
+    @RequestMapping("/admin/UserManage")
+    public String UserList(Model model) {
+        List<User> list = userService.list();
+        model.addAttribute("userList",list);
+        return "userList";
     }
-
-    /**
-     *  @author: ijnge
-     *  @Date: 2022/10/26
-     *  @Description: 删除用户
-     */
-    @PostMapping("/user/delete")
-    public R<String> deleteUserById(@RequestBody User user, HttpSession httpSession) {
-        Manager admin = (Manager) httpSession.getAttribute("user");
-        //只有超级管理员和用户管理员才可以删除
-        if (admin.getLevel() == 1 || admin.getLevel() == 2) {
-            userService.removeById(user.getId_user(),true);
-            return R.success("删除用户"+user.getUsername()+"成功");
-        }
-        else return R.error("管理员"+admin.getUsername()+"无权限");
-    }
-
-
-    @PostMapping("/user/update")
-    public R<String> updateUser(@RequestBody User user, HttpSession httpSession) {
-
-        Manager admin = (Manager) httpSession.getAttribute("user");
-        //只有超级管理员和用户管理员才可以修改
-        if (admin.getLevel() == 1 || admin.getLevel() == 2) {
-            userService.updateById(user);
-            return R.success("用户"+user.getUsername()+"修改成功");
-        }
-        else return R.error("管理员"+admin.getUsername()+"无权限");
-    }
-
-
-
-
-
-
-
-
 
 }
