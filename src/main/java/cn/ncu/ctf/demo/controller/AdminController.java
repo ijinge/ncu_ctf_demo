@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -61,14 +62,14 @@ public class AdminController {
         if (ManagerByName == null) {
             log.info("未查询到用户");
             redirectAttributes.addFlashAttribute("message","未查询到用户"+manager.getUsername());
-            //重定向
+
             return "redirect:/admin";
         }
         //密码比对
         if(!ManagerByName.getPassword().equals(password)){
             log.info("密码错误");
             redirectAttributes.addFlashAttribute("message","密码错误");
-            //重定向
+
             return  "redirect:/admin";
         }
         //用户登录成功 将id存储session
@@ -78,17 +79,60 @@ public class AdminController {
         model.addAttribute("manager",ManagerByName);
         return "/admin/index";
     }
+
+    /**
+     *  @author: ijnge
+     *  @Date: 2022/11/9
+     *  @Description: 登出
+     */
+    @RequestMapping("/admin/layout")
+    public String layout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("manager");
+        return "redirect:/admin";
+    }
+
     /**
      *  @author: ijnge
      *  @Date: 2022/10/31
      *  @Description:返回用户列表未做分页
      */
-
     @RequestMapping("/admin/UserManage")
-    public String UserList(Model model) {
+    public String UserList(Model model,HttpServletRequest httpServletRequest) {
+        Manager manager =(Manager) httpServletRequest.getSession().getAttribute("manager");
         List<User> list = userService.list();
         model.addAttribute("userList",list);
-        return "userList";
+        model.addAttribute("manager",manager);
+        return "/admin/userList";
     }
+
+    /**
+     *  @author: ijnge
+     *  @Date: 2022/11/8
+     *  @Description: 返回管理员列表
+     */
+    @RequestMapping("/admin/managerList")
+    public String ManagerList(Model model,HttpServletRequest httpServletRequest) {
+        Manager manager =(Manager) httpServletRequest.getSession().getAttribute("manager");
+        List<Manager> list = managerService.list();
+        ArrayList<String> primary_levelList = new ArrayList<String>(){{
+            add("超级管理员");
+            add("用户管理员");
+            add("题库管理员");
+            add("社区管理员");
+        }};
+
+        ArrayList<String> levelList = new ArrayList<>();
+        for(int i=0;i< list.size();i++) {
+            levelList.add(i, primary_levelList.get(manager.getLevel()));
+        }
+        System.out.println(levelList);
+        model.addAttribute("levelList",levelList);
+        model.addAttribute("ManagerList",list);
+        model.addAttribute("manager",manager);
+        return "/admin/managerList";
+    }
+
+
 
 }

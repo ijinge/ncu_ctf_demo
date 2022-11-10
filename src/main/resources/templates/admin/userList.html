@@ -11,13 +11,14 @@
 <body>
 
   <!--导航栏-->
+
   <nav class="ui inverted attached segment m-padded-tb-mini">
     <div class="ui inverted" style="display:flex;justify-content: center;">
       <div class="ui inverted secondary menu stackable" style="width: 80%;">
         <h3 class="ui teal header item">NCU—CTF管理后台</h3>
-        <a href="#" th:href="@{/admin/challenges}" class="nav-item item m-icon-big m-mobile-hide"><i class="home icon"></i> 题目</a>
-        <a href="#" th:href="@{/admin/solutions}" class="nav-item item m-icon-big m-mobile-hide"><i class="idea icon"></i> 题解</a>
-        <a href="#" th:href="@{/admin/UserManage}" class="nav-item item m-icon-big m-mobile-hide"><i class="tags icon"></i> 用户管理</a>
+        <a href="#" th:href="@{/admin/challenges}" class="nav-item item m-icon-big m-mobile-hide"><i class="clone alternate icon"></i> 题目</a>
+        <a href="#" th:href="@{/admin/solutions}" class="nav-item item m-icon-big m-mobile-hide"><i class="pencil alternate icon"></i> 题解</a>
+        <a href="#" th:href="@{/admin/UserManage}" class="nav-item item m-icon-big m-mobile-hide"><i class="users icon"></i> 用户管理</a>
         <div class="right menu m-mobile-hide">
           <div class="ui dropdown item">
             <div class="text">
@@ -26,7 +27,7 @@
             </div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              <a href="#" th:href="@{/admin/logout}" class="item">个人信息</a>
+              <a href="#" th:href="@{/admin/information}" class="item">个人信息</a>
               <a href="#" th:href="@{/admin/logout}" class="item">退出</a>
             </div>
           </div>
@@ -38,10 +39,9 @@
       <i class="sidebar icon"></i>
     </a>
   </nav>
-
   <div class="ui attached pointing menu">
     <div class="ui container" style="flex-direction:row-reverse">
-      <a href="#" th:href="@{/admin/userList}" class="item active">用户列表</a>
+      <a href="#" th:href="@{/admin/UserManage}" class="item active">用户列表</a>
       <a href="#" th:href="@{/admin/managerList}" class="item">管理员列表</a>
     </div>
   </div>
@@ -70,7 +70,7 @@
 
       <div id="table-container">
         <!--表格-->
-        <table class="ui celled table" th:fragment="blogList">
+        <table class="ui celled table"  th:fragment="blogList">
           <!--标题-->
           <thead>
           <tr>
@@ -83,12 +83,12 @@
           </tr>
           </thead>
           <tbody>
-            <tr th:each="">
-              <td>ijinge</td>
-              <td>925322357@qq.com</td>
-              <td>翻斗花园</td>
-              <td>19168271594</td>
-              <td>2022-11-1</td>
+            <tr th:each="user :${userList}">
+              <td th:text="${user.getUsername()}">ijinge</td>
+              <td th:text="${user.getEmail()}">925322357@qq.com</td>
+              <td th:text="${user.getAddress()}">翻斗花园</td>
+              <td th:text="${user.getPhone()}">19168271594</td>
+              <td th:text="${user.getUpdateTime()}">2022-11-1</td>
               <td>
                 <a href="#" th:href="@{/admin/user/update}" class="ui mini basic teal button m-margin-t-small">更新</a>
                 <a href="#" th:href="@{/admin/user/delete}" class="ui mini basic teal button m-margin-t-small">删除</a>
@@ -99,10 +99,11 @@
           <tfoot>
           <tr>
             <th colspan="6">
-              <div class="ui pagination menu" th:if="${page.totalPages}>1">
-                <a onclick="page(this)" th:attr="data-page=${page.number}-1" th:unless="${page.first}" class="icon item">上一页</a>
-                <a onclick="page(this)" th:attr="data-page=${page.number}+1" th:unless="${page.last}" class="icon item">下一页</a>
-              </div>
+              <!--分页-->
+<!--              <div class="ui pagination menu" th:if="${page.totalPages}>1">-->
+<!--                <a onclick="page(this)" th:attr="data-page=${page.number}-1" th:unless="${page.first}" class="icon item">上一页</a>-->
+<!--                <a onclick="page(this)" th:attr="data-page=${page.number}+1" th:unless="${page.last}" class="icon item">下一页</a>-->
+<!--              </div>-->
 
             </th>
           </tr>
@@ -127,4 +128,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{static/js/semantic.min.js}"></script>
 
+<script>
+  $('.ui.dropdown').dropdown();
+</script>
 </html>
