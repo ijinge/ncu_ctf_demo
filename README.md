@@ -89,9 +89,12 @@ CREATE TABLE `manager` (
   `level` int DEFAULT NULL,
   `phone` char(32) DEFAULT NULL,
   PRIMARY KEY (`id_manager`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1592079570098024451 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `manager` */
+
+insert  into `manager`(`id_manager`,`username`,`password`,`email`,`headImage`,`level`,`phone`) values 
+(1586647519381798914,'ijinge','4ff64775cfe695865f46976d99391518','2312387123@qq.com','null',1,'1783218973');
 
 /*Table structure for table `manager_notifications` */
 
@@ -165,13 +168,17 @@ CREATE TABLE `user` (
   `scores` bigint DEFAULT NULL,
   `address` char(255) DEFAULT NULL,
   `phone` char(255) DEFAULT NULL,
+  `updateTime` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=1584916010857680899 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1592081563784908802 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `user` */
 
-insert  into `user`(`id_user`,`username`,`password`,`email`,`headImage`,`scores`,`address`,`phone`) values 
-(1584916010857680898,'图图','25f9e794323b453885f5181f1b624d0b','2312387123@qq.com','null',100,'翻斗花园','1783218973');
+insert  into `user`(`id_user`,`username`,`password`,`email`,`headImage`,`scores`,`address`,`phone`,`updateTime`) values 
+(1591769052454350849,'ijinge','4ff64775cfe695865f46976d99391518','925322357@qq.com',NULL,NULL,NULL,'19168271594',NULL),
+(1592063690626621441,'test2','25f9e794323b453885f5181f1b624d0b','e721e721e218',NULL,NULL,NULL,'y7y23721873y',NULL),
+(1592081508126494722,'test','25f9e794323b453885f5181f1b624d0b','jwadlwiwjd',NULL,NULL,NULL,'dwiadjiwad',NULL),
+(1592081563784908801,'823137893','d6e081f477396a6f3a22e08b586ce374','jdqwiodi',NULL,NULL,NULL,'io21u3821',NULL);
 
 /*Table structure for table `user_challenges` */
 
@@ -210,3 +217,4 @@ CREATE TABLE `user_commond` (
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
