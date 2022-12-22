@@ -17,7 +17,7 @@
       <h3 class="ui teal header item">NCU—CTF管理后台</h3>
       <a href="#" th:href="@{/admin/challenges}" class="nav-item item m-icon-big m-mobile-hide"><i class="clone alternate icon"></i> 题目</a>
       <a href="#" th:href="@{/admin/solutions}" class="nav-item item m-icon-big m-mobile-hide"><i class="pencil alternate icon"></i> 题解</a>
-      <a href="#" th:href="@{/admin/UserManage}" class="nav-item item m-icon-big m-mobile-hide"><i class="users icon"></i> 用户管理</a>
+      <a href="#" th:href="@{/admin/UserManage/UserList}" class="nav-item item m-icon-big m-mobile-hide"><i class="users icon"></i> 用户管理</a>
       <div class="right menu m-mobile-hide">
         <div class="ui dropdown item">
           <div class="text">
@@ -27,7 +27,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             <a href="#" th:href="@{/admin/information}" class="item">个人信息</a>
-            <a href="#" th:href="@{/admin/logout}" class="item">退出</a>
+            <a href="#" th:href="@{/admin/layout}" class="item">退出</a>
           </div>
         </div>
       </div>
@@ -41,8 +41,8 @@
 
 <div class="ui attached pointing menu">
   <div class="ui container" style="flex-direction:row-reverse">
-    <a href="#" th:href="@{/admin/UserManage}" class="item">用户列表</a>
-    <a href="#" th:href="@{/admin/managerList}" class="item active">管理员列表</a>
+    <a href="#" th:href="@{/admin/UserManage/UserList}" class="item">用户列表</a>
+    <a href="#" th:href="@{/admin/manager/ManagerList}" class="item active">管理员列表</a>
   </div>
 </div>
 
@@ -90,12 +90,12 @@
           <td th:text="${manager.getPhone()}">19168271594</td>
           <td th:text="${manager.getLevel()>0 ? '正常':'禁用'}">2022-11-1</td>
           <td>
-            <a href="#" th:href="@{/admin/manager/delete}" class="ui mini basic red button m-margin-t-small">删除</a>
-            <a href="#" th:href="@{/admin/manager/changeStatus}" class="ui mini basic teal button m-margin-t-small"><span th:text="${manager.getLevel()>0 ? '禁用':'启用'}">启用</span></a>
+            <button th:id="${manager.getId_manager()+'delete'}" class="deleteManager-btn ui mini basic red button m-margin-t-small" th:value="${manager.getId_manager()}">删除</button>
+            <button th:id="${manager.getId_manager()+'update'}" class="updateManager-btn ui mini basic teal button m-margin-t-small" th:value="${manager.getId_manager()}">更新</button>
+            <button th:id="${manager.getId_manager()+'changeStatus'}" th:value="${manager.getId_manager()}" class="changeStatus-btn ui mini basic black button m-margin-t-small"><span th:text="${manager.getLevel()>0 ? '禁用':'启用'}">启用</span></button>
           </td>
         </tr>
         </tbody>
-
         <tfoot>
         <tr>
           <th colspan="6">
@@ -113,7 +113,7 @@
 
 
       <!--弹出层-->
-      <form class="ui modal pushAddManage" action="#" th:action="@{/Comments/publish}"  method="post">
+      <form class="ui modal pushAddManage" action="#" th:action="@{/admin/Manager/AddManager}"  method="post">
         <i class="close icon"></i>
         <div class="header">
           管理员管理
@@ -134,7 +134,7 @@
                     <div class="ui six wide column">
                       <div class="field">
                         <div class="ui left icon input">
-                          <input type="text" name="CommentsName" placeholder="昵称">
+                          <input type="text" name="username" placeholder="昵称">
                           <i class="user icon"></i>
                         </div>
                       </div>
@@ -161,7 +161,7 @@
                     <div class="ui six wide column">
                       <div class="field">
                         <div class="ui left icon input">
-                          <input type="text" name="CommentsName" placeholder="电话号码">
+                          <input type="text" name="phone" placeholder="电话号码">
                           <i class="mobile icon"></i>
                         </div>
                       </div>
@@ -170,7 +170,7 @@
                     <div class="ui six wide column">
                       <div class="field">
                         <div class="ui left icon input">
-                          <input type="text" name="CommentsName" placeholder="邮箱">
+                          <input type="text" name="email" placeholder="邮箱">
                           <i class="envelope icon"></i>
                         </div>
                       </div>
@@ -181,7 +181,7 @@
                     <div class="ui fourteen wide column">
                       <div class="field">
                         <div class="ui left icon input">
-                          <input type="text" name="CommentsName" placeholder="密码">
+                          <input type="text" name="password" placeholder="密码">
                           <i class="lock icon"></i>
                         </div>
                       </div>
@@ -190,10 +190,12 @@
 
                   <div class="row">
                     <div class="ui fourteen wide column">
-                      <div class="field">
-                        <div class="ui left icon input">
-                          <input type="text" name="CommentsName" placeholder="确认密码">
-                          <i class="lock icon"></i>
+                      <div>
+                        <div class="field">
+                          <div class="ui left icon input">
+                            <input type="text" placeholder="确认密码">
+                            <i class="lock icon"></i>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -213,6 +215,132 @@
           </button>
         </div>
       </form>
+
+      <!--更新弹出层-->
+      <form class="ui modal updateManager" action="#" th:action="@{/admin/Manager/updateManager}"  method="post">
+        <i class="close icon"></i>
+        <div class="header">
+          管理员管理
+        </div>
+        <div class="image content">
+          <div class="ui medium image">
+            <img src="../../static/images/touxiang/touxiang2.jpg">
+          </div>
+          <div class="description">
+
+            <div class="ui header">修改管理员</div>
+            <div class="ui form"  id="update-form">
+
+              <div class="fields">
+                <!--隐藏域添加id-->
+                <input type="hidden" name="id_manager" id="id_manager" value="">
+                <div class="ui grid">
+                  <div class="row">
+                    <div class="ui six wide column">
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <input type="text" id="username" name="username" placeholder="昵称" value="">
+                          <i class="user icon"></i>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ui six wide column">
+                      <!--标签字段-->
+                      <div class="field">
+                        <select class="ui dropdown" id="level" name="level" value="">
+                          <option value="">等级</option>
+                          <option value="1">超级管理员</option>
+                          <option value="2">题库管理员</option>
+                          <option value="3">社区管理员</option>
+                          <option value="4">用户管理员</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="ui four wide column">
+
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="ui six wide column">
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <input type="text" name="phone" id="phone" placeholder="电话号码" value="">
+                          <i class="mobile icon"></i>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ui six wide column">
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <input type="text" name="email" id="email" placeholder="邮箱" value="">
+                          <i class="envelope icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="ui fourteen wide column">
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <input type="text" name="password" id="password" placeholder="密码" value="">
+                          <i class="lock icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--头像-->
+                  <div class="row">
+                    <div class="ui fourteen wide column">
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <input type="text" name="headImage" id="headImage" placeholder="头像" value="">
+                          <i class="lock icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="ui black deny button">
+            退出
+          </div>
+          <button class="ui positive right labeled icon button" id="update-btn">
+            更新
+            <i class="checkmark icon"></i>
+          </button>
+        </div>
+      </form>
+
+      <div class="ui modal deleteManager">
+        <i class="close icon"></i>
+        <div class="header">
+          是否删除？
+        </div>
+        <div class="actions">
+          <div class="ui black deny button">
+            否
+          </div>
+          <div class="ui positive right labeled icon button">
+            是
+            <i class="checkmark icon"></i>
+          </div>
+        </div>
+      </div>
+
+
+
+
 
       <div class="ui success message" id="message" th:unless="${#strings.isEmpty(message)}">
         <i class="close icon"></i>
@@ -235,5 +363,58 @@
   $('.addManager').click(function () {
     $('.pushAddManage').modal('show')
   })
+
+
+  //删除管理员
+  $('.deleteManager-btn').click(function () {
+      var id = this.value
+      $('.ui.modal.deleteManager').modal({
+            closable  : false,
+            onDeny    : function(){
+              return false;
+            },
+            onApprove : function() {
+              $.ajax({
+                url: "/admin/Manager/deleteManager",
+                data: {id},
+                type: "POST",
+                dataType: "json",
+                async: false
+              })
+              window.location.reload()
+            }
+      }).modal('show')
+  })
+
+  //修改管理员信息
+  $('.updateManager-btn').click(function (){
+    var id = this.value;
+    $.ajax({
+      url: "/admin/Manager/Profile",
+      data: {id},
+      type:"POST",
+      dataType: "json",
+      success: function (data) {
+        let obj = {
+            Manager: {
+            },
+        }
+        obj = data;
+        $('#username').attr("value",obj.Manager.username)
+        $('#email').attr("value",obj.Manager.email)
+        $('#level').attr("value",obj.Manager.level)
+        $('#phone').attr("value",obj.Manager.phone)
+        $('#headImage').attr("value",obj.Manager.headImage)
+        $('#id_manager').attr("value",id)
+      }
+    });
+    $('.ui.modal.updateManager').modal('show');
+  })
+
+  //启用/禁用
+
+
+
+
 </script>
 </html>

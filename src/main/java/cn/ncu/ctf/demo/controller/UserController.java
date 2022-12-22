@@ -82,6 +82,7 @@ public class UserController {
         session.setAttribute("user",userServiceOne);
         model.addAttribute("user",userServiceOne);
 
+
         return "/index";
     }
 
@@ -112,16 +113,24 @@ public class UserController {
             return "redirect:/register";
         }
         String password = user.getPassword();
-        password = DigestUtils.md5DigestAsHex(password.getBytes());
-        user.setPassword(password);
-        userService.save(user);
-        model.addAttribute("user",user);
+        String encryptPassword = DigestUtils.md5DigestAsHex(password.getBytes());
 
+        user.setPassword(encryptPassword);
+        userService.save(user);
+        user.setPassword(password);
+        model.addAttribute("user",user);
+        model.addAttribute("message","用户"+user.getUsername()+"注册成功！请登录");
         return "Login";
     }
 
     @RequestMapping("/challenges")
-    public String challenge() {
+    public String challenge(HttpServletRequest httpServletRequest,Model model) {
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User)session.getAttribute("user");
+        if(user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user",user);
         return "challenge";
     }
 

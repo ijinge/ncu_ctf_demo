@@ -18,7 +18,7 @@
         <h3 class="ui teal header item">NCU—CTF管理后台</h3>
         <a href="#" th:href="@{/admin/challenges}" class="nav-item item m-icon-big m-mobile-hide"><i class="clone alternate icon"></i> 题目</a>
         <a href="#" th:href="@{/admin/solutions}" class="nav-item item m-icon-big m-mobile-hide"><i class="pencil alternate icon"></i> 题解</a>
-        <a href="#" th:href="@{/admin/UserManage}" class="nav-item item m-icon-big m-mobile-hide"><i class="users icon"></i> 用户管理</a>
+        <a href="#" th:href="@{/admin/UserManage/UserList}" class="nav-item item m-icon-big m-mobile-hide"><i class="users icon"></i> 用户管理</a>
         <div class="right menu m-mobile-hide">
           <div class="ui dropdown item">
             <div class="text">
@@ -41,8 +41,8 @@
   </nav>
   <div class="ui attached pointing menu">
     <div class="ui container" style="flex-direction:row-reverse">
-      <a href="#" th:href="@{/admin/UserManage}" class="item active">用户列表</a>
-      <a href="#" th:href="@{/admin/managerList}" class="item">管理员列表</a>
+      <a href="#" th:href="@{/admin/UserManage/UserList}" class="item active">用户列表</a>
+      <a href="#" th:href="@{/admin/Manager/ManagerList}" class="item">管理员列表</a>
     </div>
   </div>
 
@@ -90,8 +90,8 @@
               <td th:text="${user.getPhone()}">19168271594</td>
               <td th:text="${user.getUpdateTime()}">2022-11-1</td>
               <td>
-                <a href="#" th:href="@{/admin/user/update}" class="ui mini basic teal button m-margin-t-small">更新</a>
-                <a href="#" th:href="@{/admin/user/delete}" class="ui mini basic teal button m-margin-t-small">删除</a>
+                <button th:id="${user.getId_user()}" class="ui mini basic teal button m-margin-t-small">更新</button>
+                <button th:value="${user.getId_user()}" th:id="${user.getId_user()+'delete'}" class="deleteUser ui mini basic red button m-margin-t-small">删除</button>
               </td>
             </tr>
           </tbody>
@@ -109,6 +109,27 @@
           </tr>
           </tfoot>
         </table>
+
+
+
+        <!--弹出层-->
+        <div class="ui modal delete">
+          <i class="close icon"></i>
+          <div class="header">
+            是否删除？
+          </div>
+          <div class="actions">
+            <div class="ui black deny button">
+              否
+            </div>
+            <div class="ui positive right labeled icon button">
+              是
+              <i class="checkmark icon"></i>
+            </div>
+          </div>
+        </div>
+
+
 
 
         <div class="ui success message" id="message" th:unless="${#strings.isEmpty(message)}">
@@ -130,5 +151,30 @@
 
 <script>
   $('.ui.dropdown').dropdown();
+
+
+  $('.deleteUser').click(function () {
+    var id = this.value
+    $('.ui.modal.delete').modal({
+      closable: false,
+      onDeny: function () {
+        return false;
+      },
+      onApprove: function () {
+        $.ajax({
+          url: "/admin/UserManager/deleteUser",
+          data: {id},
+          type: "POST",
+          dataType: "json",
+          async: false
+        })
+        window.location.reload()
+      }
+    }).modal('show')
+  })
+
+
+
+
 </script>
 </html>

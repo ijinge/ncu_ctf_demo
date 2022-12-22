@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
-@ServletComponentScan(basePackages = {"cn.ncu.ctf.demo.fliter"})
+@ServletComponentScan(basePackages = {"cn.ncu.ctf.demo.filter"})
 public class CtfDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(CtfDemoApplication.class, args);

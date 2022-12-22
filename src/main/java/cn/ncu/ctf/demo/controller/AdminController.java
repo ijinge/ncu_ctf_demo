@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -97,7 +99,7 @@ public class AdminController {
      *  @Date: 2022/10/31
      *  @Description:返回用户列表未做分页
      */
-    @RequestMapping("/admin/UserManage")
+    @RequestMapping("/admin/UserManage/UserList")
     public String UserList(Model model,HttpServletRequest httpServletRequest) {
         Manager manager =(Manager) httpServletRequest.getSession().getAttribute("manager");
         List<User> list = userService.list();
@@ -106,12 +108,36 @@ public class AdminController {
         return "/admin/userList";
     }
 
+    @RequestMapping("/admin/UserManager/deleteUser")
+    public String deleteUser(String id){
+        log.info("删除用户 {}",id);
+        userService.removeById(id);
+        return "redirect:/admin/UserManage";
+    }
+
+
+
+    /**
+     *  @author: ijnge
+     *  @Date: 2022/11/14
+     *  @Description: 相应异步查询用户信息，便于更新操作
+     */
+    @ResponseBody
+    @RequestMapping("/admin/Manager/Profile")
+    public HashMap<Object,Object> showManagerProfile(String id) {
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("Manager",managerService.getById(id));
+        return map;
+    }
+
+
+
     /**
      *  @author: ijnge
      *  @Date: 2022/11/8
      *  @Description: 返回管理员列表
      */
-    @RequestMapping("/admin/managerList")
+    @RequestMapping("/admin/Manager/ManagerList")
     public String ManagerList(Model model,HttpServletRequest httpServletRequest) {
         Manager manager =(Manager) httpServletRequest.getSession().getAttribute("manager");
         List<Manager> list = managerService.list();
@@ -126,13 +152,61 @@ public class AdminController {
         for(int i=0;i< list.size();i++) {
             levelList.add(i, primary_levelList.get(manager.getLevel()));
         }
-        System.out.println(levelList);
+
         model.addAttribute("levelList",levelList);
         model.addAttribute("ManagerList",list);
         model.addAttribute("manager",manager);
+
         return "/admin/managerList";
     }
 
+    /**
+     *  @author: ijnge
+     *  @Date: 2022/11/13
+     *  @Description:  添加管理员
+     */
+    @PostMapping("/admin/Manager/AddManager")
+    public String addManager(
+            Manager manager,
+            Model model
+    ) {
+        log.info("添加管理员 {}",manager.toString());
+        //md5加密
+        manager.setPassword(DigestUtils.md5DigestAsHex(manager.getPassword().getBytes()));
+        managerService.save(manager);
+        return "redirect:/admin/Manager/ManagerList";
+    }
+
+    /**
+     *  @author: ijnge
+     *  @Date: 2022/11/13
+     *  @Description: 删除管理员
+     */
+    @RequestMapping("/admin/Manager/deleteManager")
+    public String deleteManager(String id) {
+        log.info("删除管理员 {}",id);
+        managerService.removeById(id);
+        return "redirect:/admin/Manager/ManagerList";
+    }
+
+    @RequestMapping("/admin/Manager/updateManager")
+    public String updateManager(Manager manager) {
+        log.info("管理员{} ，更新成功",manager.getUsername());
+        managerService.saveOrUpdate(manager);
+        return "redirect:/admin/Manager/ManagerList";
+    }
+
+
+    /**
+     *  @author: ijnge
+     *  @Date: 2022/11/20
+     *  @Description: 返回管理员详细
+     */
+
+    @RequestMapping("/admin/profile")
+    public String Profile() {
+        return "/admin/profile";
+    }
 
 
 }
